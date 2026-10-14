@@ -1,0 +1,82 @@
+AUC-ROC COMPUTATION CODE (from utils.py)
+==================================================
+
+def evaluate_model(model, data_loader, name="Model", verbose=True):
+    """
+    Evaluasi model -> dict berisi semua metrik:
+      accuracy, auc_roc, sensitivity (recall macro),
+      specificity (macro), f1 (macro),
+      cm (confusion matrix list), fpr/tpr (untuk ROC plot)
+    """
+    model.eval()
+    preds, actuals, probs = [], [], []
+
+    with torch.no_grad():
+        for batch in data_loader:
+            ids    = batch["input_ids"].to(device)
+            mask   = batch["attention_mask"].to(device)
+            labels = batch["labels"].to(device)
+            out    = model(ids, attention_mask=mask)
+            logits = out.logits
+            preds.extend(torch.argmax(logits, dim=1).cpu().numpy())
+            actuals.extend(labels.cpu().numpy())
+            probs.extend(torch.softmax(logits, dim=1)[:, 1].cpu().numpy())
+
+    accuracy    = float(accuracy_score(actuals, preds))
+    f1          = float(f1_score(actuals, preds, average="macro", zero_division=0))
+    sensitivity = float(recall_score(actuals, preds, average="macro", zero_division=0))
+
+    try:
+        auc_roc = float(roc_auc_score(actuals, probs))
+        # ── FIX #1: AUC sanity check ─────────────────────────────
+        # If accuracy > 0.6 but AUC < 0.5, P(fake) is likely inverted
+        if accuracy > 0.60 and auc_roc < 0.50:
+            print(f"  WARNING: AUC={auc_roc:.4f} < 0.5 but Acc={accuracy:.4f} > 0.6")
+            print(f"           Likely passing P(real) instead of P(fake).")
+            print(f"           Flipping probabilities: 1 - P(real) = P(fake)")
+            probs = [1.0 - p for p in probs]
+            auc_roc = float(roc_auc_score(actuals, probs))
+            print(f"           Corrected AUC = {auc_roc:.4f}")
+    except Exception:
+        auc_roc = 0.0
+
+    # Specificity = TN/(TN+FP) per class -> rata-rata macro
+    cm_arr = confusion_matrix(actuals, preds)
+    specs = []
+    for i in range(len(cm_arr)):
+        tn = cm_arr.sum() - cm_arr[i, :].sum() - cm_arr[:, i].sum() + cm_arr[i, i]
+        fp = cm_arr[:, i].sum() - cm_arr[i, i]
+        specs.append(float(tn / (tn + fp)) if (tn + fp) > 0 else 0.0)
+    specificity = sum(specs) / len(specs)
+
+    try:
+        fpr_arr, tpr_arr, _ = roc_curve(actuals, probs)
+        fpr_list, tpr_list = fpr_arr.tolist(), tpr_arr.tolist()
+    except Exception:
+        fpr_list, tpr_list = [0.0, 1.0], [0.0, 1.0]
+
+    if verbose:
+        print(f"\n{'='*58}")
+        print(f"  EVALUATION: {name}")
+        print(f"{'='*58}")
+        print(classification_report(actuals, preds,
+                                     target_names=["Real (0)", "Fake (1)"],
+                                     zero_division=0))
+        print(f"{'─'*58}")
+        print(f"   Accuracy              : {accuracy:.4f}  ({accuracy*100:.2f}%)")
+        print(f"   AUC-ROC               : {auc_roc:.4f}")
+        print(f"   Sensitivity (Recall)  : {sensitivity:.4f}")
+        print(f"   Specificity           : {specificity:.4f}")
+        print(f"   F1-Score (Macro)      : {f1:.4f}")
+        print(f"{'='*58}")
+
+    return {
+        "accuracy":    accuracy,
+        "auc_roc":     auc_roc,
+        "sensitivity": sensitivity,
+        "specificity": specificity,
+        "f1":          f1,
+        "cm":          cm_arr.tolist(),
+        "fpr":         fpr_list,
+        "tpr":         tpr_list,
+    }

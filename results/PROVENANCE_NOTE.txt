@@ -1,0 +1,20 @@
+PROVENANCE NOTE — which numbers come from which run
+=====================================================
+
+RUN A — Table 1 / main results (all_results.json)
+  Seeds: 42, 123, 999, 2026, 777 (5 seeds, mean +/- std)
+  Preprocessing: standard prepare.py marker-stripping only
+  IndoBERT F1 = 0.9610 +/- 0.0212
+
+RUN B — source-blind "before" (source_blind_comparison.json)
+  Source: original Phase-1 PDF report (result_.pdf, Table 4.1)
+  Single run, predates all 8 Phase-2 fixes
+  IndoBERT F1 = 0.9918
+
+RUN C — source-blind "after" (source_blind_comparison.json)
+  Source: separate rerun (run_source_blind.py) with extra marker stripping
+  Single run
+  IndoBERT F1 = 0.9474
+
+These are three different runs, not the same data re-sliced -- that's why
+the numbers don't match across the report.

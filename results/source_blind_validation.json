@@ -1,0 +1,136 @@
+{
+  "train_english": {
+    "[SALAH]": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "[HOAKS]": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "KOMPAS.com": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "TurnBackHoax": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Mafindo": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "URL (https)": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Copyright ©": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Editor:": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Klaim:": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "WIB timestamp": {
+      "before": 37,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    }
+  },
+  "test_indonesia": {
+    "[SALAH]": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "[HOAKS]": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "KOMPAS.com": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "TurnBackHoax": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Mafindo": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "URL (https)": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Copyright ©": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Editor:": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "Klaim:": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    },
+    "WIB timestamp": {
+      "before": 0,
+      "after": 0,
+      "removal_rate": 1.0,
+      "status": "OK"
+    }
+  },
+  "train_stats": {
+    "total": 20166,
+    "real": 16559,
+    "fake": 3607
+  },
+  "test_stats": {
+    "total": 1024,
+    "real": 742,
+    "fake": 282
+  }
+}

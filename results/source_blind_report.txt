@@ -1,0 +1,62 @@
+================================================================================================================
+  C1 - SOURCE-BLIND PREPROCESSING: BEFORE vs AFTER
+  Expected by Prof. Huang: F1 turun dari ~99% ke 80-88%
+  (source bias confirmed if delta F1 < -0.05)
+================================================================================================================
+Model                    Metric         Before    After    Delta  Interpretasi
+----------------------------------------------------------------------------------------------------------------
+B1: XLM-R ZS             Accuracy       0.7792   0.8662  +0.0870  
+                         AUC-ROC        0.9439   0.8766  -0.0673  
+                         Sensitivity    0.8333   0.7703  -0.0630  
+                         Specificity    0.8333   0.7703  -0.0630  
+                         F1-Score       0.7632   0.8052  +0.0420  ️  within acceptable range
+----------------------------------------------------------------------------------------------------------------
+B2: IndoBERT             Accuracy       0.9935   0.9570  -0.0365  
+                         AUC-ROC        0.9998   0.9905  -0.0093  
+                         Sensitivity    0.9881   0.9583  -0.0298  
+                         Specificity    0.9881   0.9583  -0.0298  
+                         F1-Score       0.9918   0.9474  -0.0444  ️  within acceptable range
+----------------------------------------------------------------------------------------------------------------
+B3: Translate-Train      Accuracy       0.8766   0.8135  -0.0631  
+                         AUC-ROC        0.9341   0.6791  -0.2550  
+                         Sensitivity    0.8259   0.7020  -0.1239  
+                         Specificity    0.8259   0.7020  -0.1239  
+                         F1-Score       0.8383   0.7267  -0.1116   source bias CONFIRMED (drop > 10 pp)
+----------------------------------------------------------------------------------------------------------------
+B4: CLKD-ZS              Accuracy       0.8506   0.7754  -0.0752  
+                         AUC-ROC        0.9120   0.5528  -0.3592  
+                         Sensitivity    0.8229   0.5922  -0.2307  
+                         Specificity    0.8229   0.5922  -0.2307  
+                         F1-Score       0.8158   0.5886  -0.2272   source bias CONFIRMED (drop > 10 pp)
+----------------------------------------------------------------------------------------------------------------
+B5: CLKD-FT              Accuracy       0.9935   0.9600  -0.0335  
+                         AUC-ROC        0.9970   0.9810  -0.0160  
+                         Sensitivity    0.9881   0.9537  -0.0344  
+                         Specificity    0.9881   0.9537  -0.0344  
+                         F1-Score       0.9918   0.9502  -0.0416  ️  still high - add more marker stripping
+----------------------------------------------------------------------------------------------------------------
+
+================================================================================================================
+  F1-SCORE SUMMARY (Primary Metric)
+================================================================================================================
+Model                    Methodology                Before F1   After F1   Delta F1  Status
+----------------------------------------------------------------------------------------------------------------
+B1: XLM-R ZS             Vanilla Transfer              0.7632     0.8052    +0.0420  ️  within acceptable range
+B2: IndoBERT             Supervised Upper Bound        0.9918     0.9474    -0.0444  ️  within acceptable range
+B3: Translate-Train      Translation-Based             0.8383     0.7267    -0.1116   DROP confirmed
+B4: CLKD-ZS              Proposed (Cross-Lingual)      0.8158     0.5886    -0.2272   DROP confirmed
+B5: CLKD-FT              Proposed (+ Adaptation)       0.9918     0.9502    -0.0416  ️  still high
+================================================================================================================
+
+INTERPRETATION FOR THESIS (Chapter 4 / 5):
+  • Drop F1 > 10 pp  -> source bias CONFIRMED, previous numbers are artifact
+  • Drop F1 5-10 pp  -> source bias detected, discuss in Chapter 5
+  • F1 still > 95%   -> add more marker stripping in data/prepare.py
+  • If CLKD-FT drops less than IndoBERT -> contrastive alignment is effective
+  • Cite: Schuster et al. (2020), Bozarth & Budak (2020)
+
+FRAMING SUGGESTED by Prof. Huang (if F1 drops to 75-88%):
+  'We diagnose and quantify source-style bias in Indonesian fake news datasets
+   and demonstrate that SG-CLKD maintains [X]% F1 under source-blind
+   preprocessing, while IndoBERT drops to [Y]% - a statistically significant
+   gap (Wilcoxon p < 0.05, Cohen's d > 0.5).'

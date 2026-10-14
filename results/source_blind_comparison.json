@@ -1,0 +1,122 @@
+{
+  "experiment": "C1 Source-Blind Preprocessing",
+  "note": "BEFORE dari result_.pdf (Table 4.1); AFTER dari rerun dengan data blinded",
+  "before": {
+    "B1: XLM-R ZS": {
+      "accuracy": 0.7792,
+      "auc_roc": 0.9439,
+      "sensitivity": 0.8333,
+      "specificity": 0.8333,
+      "f1": 0.7632
+    },
+    "B2: IndoBERT": {
+      "accuracy": 0.9935,
+      "auc_roc": 0.9998,
+      "sensitivity": 0.9881,
+      "specificity": 0.9881,
+      "f1": 0.9918
+    },
+    "B3: Translate-Train": {
+      "accuracy": 0.8766,
+      "auc_roc": 0.9341,
+      "sensitivity": 0.8259,
+      "specificity": 0.8259,
+      "f1": 0.8383
+    },
+    "B4: CLKD-ZS": {
+      "accuracy": 0.8506,
+      "auc_roc": 0.912,
+      "sensitivity": 0.8229,
+      "specificity": 0.8229,
+      "f1": 0.8158
+    },
+    "B5: CLKD-FT": {
+      "accuracy": 0.9935,
+      "auc_roc": 0.997,
+      "sensitivity": 0.9881,
+      "specificity": 0.9881,
+      "f1": 0.9918
+    }
+  },
+  "after": {
+    "B1: XLM-R ZS": {
+      "accuracy": 0.8662,
+      "auc_roc": 0.8766,
+      "sensitivity": 0.7703,
+      "specificity": 0.7703,
+      "f1": 0.8052
+    },
+    "B2: IndoBERT": {
+      "accuracy": 0.957,
+      "auc_roc": 0.9905,
+      "sensitivity": 0.9583,
+      "specificity": 0.9583,
+      "f1": 0.9474
+    },
+    "B3: Translate-Train": {
+      "accuracy": 0.8135,
+      "auc_roc": 0.6791,
+      "sensitivity": 0.702,
+      "specificity": 0.702,
+      "f1": 0.7267
+    },
+    "B4: CLKD-ZS": {
+      "accuracy": 0.7754,
+      "auc_roc": 0.5528,
+      "sensitivity": 0.5922,
+      "specificity": 0.5922,
+      "f1": 0.5886
+    },
+    "B5: CLKD-FT": {
+      "accuracy": 0.96,
+      "auc_roc": 0.981,
+      "sensitivity": 0.9537,
+      "specificity": 0.9537,
+      "f1": 0.9502
+    }
+  },
+  "delta": {
+    "B1: XLM-R ZS": {
+      "accuracy": 0.087,
+      "auc_roc": -0.0673,
+      "sensitivity": -0.063,
+      "specificity": -0.063,
+      "f1": 0.042
+    },
+    "B2: IndoBERT": {
+      "accuracy": -0.0365,
+      "auc_roc": -0.0093,
+      "sensitivity": -0.0298,
+      "specificity": -0.0298,
+      "f1": -0.0444
+    },
+    "B3: Translate-Train": {
+      "accuracy": -0.0631,
+      "auc_roc": -0.255,
+      "sensitivity": -0.1239,
+      "specificity": -0.1239,
+      "f1": -0.1116
+    },
+    "B4: CLKD-ZS": {
+      "accuracy": -0.0752,
+      "auc_roc": -0.3592,
+      "sensitivity": -0.2307,
+      "specificity": -0.2307,
+      "f1": -0.2272
+    },
+    "B5: CLKD-FT": {
+      "accuracy": -0.0335,
+      "auc_roc": -0.016,
+      "sensitivity": -0.0344,
+      "specificity": -0.0344,
+      "f1": -0.0416
+    }
+  },
+  "source_bias_confirmed": {
+    "B1: XLM-R ZS": false,
+    "B2: IndoBERT": false,
+    "B3: Translate-Train": true,
+    "B4: CLKD-ZS": true,
+    "B5: CLKD-FT": false
+  }
+}
